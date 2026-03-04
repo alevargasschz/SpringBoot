@@ -50,14 +50,17 @@ public class User {
 
     @OneToMany(mappedBy = "createdBy")
     @JsonIgnore
+    @ToString.Exclude
     private List<Game> games;
 
     @OneToMany(mappedBy = "userId")
     @JsonIgnore
+    @ToString.Exclude
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "hostId")
     @JsonIgnore
+    @ToString.Exclude
     private List<Session> sessions;
 
     @OneToMany(mappedBy = "userId", fetch = FetchType.LAZY)
