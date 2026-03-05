@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.User;
-import com.example.demo.service.IRoleService;
 import com.example.demo.service.IUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +36,6 @@ public class UserController {
         user.setPasswordHash("hashed_password");
         user.setBio("Esta es la biografía del nuevo usuario.");
         user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        user.setRole(2); // Asignar un rol existente o null si no se encuentra
         return userService.saveUser(user);
     }
 }

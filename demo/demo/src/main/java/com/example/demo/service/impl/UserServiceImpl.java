@@ -1,8 +1,6 @@
 package com.example.demo.service.impl;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Role;
@@ -26,7 +24,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public User saveUser(User user) {
-        Role role = roleService.findById(1);
+        Role role = roleService.findById(2);
         user.setRole(role);
         return userRepository.save(user);
     }
