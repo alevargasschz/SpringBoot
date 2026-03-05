@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.User;
+import com.example.demo.service.IRoleService;
 import com.example.demo.service.IUserService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,5 +27,17 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsers() {
         return userService.findAllUsers();
+    }
+
+    @GetMapping("/save")
+    public User saveUser() {
+        User user = new User();
+        user.setUsername("nuevo_usuario");
+        user.setEmail("nuevo_usuario@example.com");
+        user.setPasswordHash("hashed_password");
+        user.setBio("Esta es la biografía del nuevo usuario.");
+        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        user.setRole(2); // Asignar un rol existente o null si no se encuentra
+        return userService.saveUser(user);
     }
 }

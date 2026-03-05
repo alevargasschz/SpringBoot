@@ -6,4 +6,8 @@ import com.example.demo.model.User;
 
 public interface IUserService {
     List<User> findAllUsers();
+
+    User saveUser(User user);
+
+    void deleteUser(Integer id);
 }
