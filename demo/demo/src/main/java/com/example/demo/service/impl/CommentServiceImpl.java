@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements ICommentService {
-    private ICommentRepository commentRepository;
+    private final ICommentRepository commentRepository;
 
     @Override
     public List<Comment> findByCreatedAtBetween(Timestamp startDate, Timestamp endDate) {

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements IRoleService {
-    private IRoleRepository roleRepository;
+    private final IRoleRepository roleRepository;
 
     @Override
     public Role findById(Integer id) {

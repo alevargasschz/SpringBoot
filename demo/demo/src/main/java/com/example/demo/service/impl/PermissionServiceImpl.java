@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class PermissionServiceImpl implements IPermissionService {
-    private IPermissionRepository permissionRepository;
+    private final IPermissionRepository permissionRepository;
 
     @Override
     public List<Permission> findByRolePermissions_Role_Users_Id(Integer userId) {

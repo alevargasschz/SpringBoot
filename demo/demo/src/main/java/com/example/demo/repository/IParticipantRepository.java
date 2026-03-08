@@ -11,5 +11,5 @@ public interface IParticipantRepository extends JpaRepository<Participant, Integ
     // Ya esta el CRUD básico con JpaRepository, pero se pueden agregar consultas personalizadas si es necesario
 
     // Consulta personalizada para obtener los participantes que ganaron o perdieron
-    List<Participant> findByWinner(boolean winner);
+    List<Participant> findByIsWinner(boolean isWinner);
 }

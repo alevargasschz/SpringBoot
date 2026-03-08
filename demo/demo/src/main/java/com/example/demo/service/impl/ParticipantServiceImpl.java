@@ -13,11 +13,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ParticipantServiceImpl implements IParticipantService {
-    private IParticipantRepository participantRepository;
+    private final IParticipantRepository participantRepository;
 
     @Override
-    public List<Participant> findByWinner(boolean winner) {
-        return participantRepository.findByWinner(winner);
+    public List<Participant> findByWinner(boolean isWinner) {
+        return participantRepository.findByIsWinner(isWinner);
     }
 
     
