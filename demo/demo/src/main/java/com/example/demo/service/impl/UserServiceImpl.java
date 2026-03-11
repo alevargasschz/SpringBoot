@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Role;
@@ -18,8 +20,10 @@ public class UserServiceImpl implements IUserService{
     private final IRoleService roleService;
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public Page<User> findAllUsers() {
+        Sort sort = Sort.by("id").descending();
+        Pageable pageable = PageRequest.of(0, 5);
+        return userRepository.findAll(pageable);
     }
 
     @Override

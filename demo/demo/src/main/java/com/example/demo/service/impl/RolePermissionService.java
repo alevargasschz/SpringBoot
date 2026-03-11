@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.Permission;
 import com.example.demo.model.Role;
 import com.example.demo.model.RolePermission;
 import com.example.demo.repository.IPermissionRepository;

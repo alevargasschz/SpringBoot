@@ -19,6 +19,6 @@ public class RolePermissionController {
 
     @GetMapping
     public List<RolePermission> addPermissionsToRole() {
-        return rolePermissionService.addPermissionsToRole(2, List.of(1));
+        return rolePermissionService.addPermissionsToRole(2, List.of(3, 40));
     }
 }
