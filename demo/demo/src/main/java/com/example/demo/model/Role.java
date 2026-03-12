@@ -5,12 +5,14 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 // @Data funciona como un atajo para generar automáticamente los métodos getters, setters, toString, equals y hashCode en la clase Role. 
 // Esto reduce la cantidad de código que necesitas escribir manualmente y hace que tu clase sea más limpia y fácil de mantener.
@@ -38,12 +40,14 @@ public class Role {
     // Esto significa que un rol puede ser asignado a muchos usuarios, pero cada usuario solo puede tener un rol. 
     // El atributo mappedBy se utiliza para indicar que la relación está mapeada por el campo "role" en la clase User, 
     // lo que significa que la tabla de usuarios tendrá una columna de clave foránea que referencia a la tabla de roles.
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     @JsonIgnore
+    @ToString.Exclude
     private List<User> users;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
     @JsonIgnore
+    @ToString.Exclude
     private List<RolePermission> rolePermissions;
 }
 

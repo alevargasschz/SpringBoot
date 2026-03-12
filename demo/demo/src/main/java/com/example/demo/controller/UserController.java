@@ -25,7 +25,7 @@ public class UserController {
 
     @GetMapping
     public Page<User> getAllUsers() {
-        return userService.findAllUsers();
+        return userService.findAllUsers(0, 5);
     }
 
     @GetMapping("/save")
