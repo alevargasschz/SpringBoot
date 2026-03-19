@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <h2>Agregar nuevo usuario</h2>
+        <form th:action="@{/mvc/users}" method="post">
+            <div>
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" id="username" name="username" maxlength="50" required>
+            </div>
+            <div>
+                <label for="email">Correo electrónico:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="passwordHash">Contraseña:</label>
+                <input type="password" id="passwordHash" name="passwordHash" required>
+            </div>
+            <div>
+                <label for="bio">Biografía:</label>
+                <textarea id="bio" name="bio" required></textarea>
+            </div>
+            <div>
+                <select id="role" name="role.id" required>
+                    <option value="" disabled selected>Selecciona un rol</option>
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}">Role Name</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit">Agregar Usuario</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
