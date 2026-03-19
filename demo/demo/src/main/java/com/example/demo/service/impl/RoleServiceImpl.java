@@ -1,5 +1,7 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Role;
@@ -18,5 +20,9 @@ public class RoleServiceImpl implements IRoleService {
         return roleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Role not found"));
     }
 
+    @Override
+    public List<Role> findAll() {
+        return roleRepository.findAll();
+    }
 
 }

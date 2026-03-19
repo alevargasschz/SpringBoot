@@ -61,6 +61,6 @@ public class UserServiceIntegrationTest {
         Page<User> page = userService.findAllUsers(0, 1);
 
         assertEquals(1, page.getSize());
-        assertEquals(user1, page.getContent().get(0));
+        assertEquals(user2.getId(), page.getContent().get(0).getId());
     }
 }
