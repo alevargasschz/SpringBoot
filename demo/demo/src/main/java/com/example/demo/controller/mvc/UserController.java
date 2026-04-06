@@ -44,6 +44,6 @@ public class UserController {
     public String addUser(@ModelAttribute User user) {
         user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         userService.saveUser(user);
-        return "";
+        return "redirect:/mvc/users";
     }
 }
