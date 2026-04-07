@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>User List</title>
 </head>
+
 <body>
     <div>
         <h2>Lista de usuarios</h2>
@@ -23,13 +26,18 @@
                     <td th:text="${user.username}">Default Name</td>
                     <td th:text="${user.email}">Default Email</td>
                     <td>
-                        <a th:href="@{/users/{id}(id=${user.id})}">Editar</a>
-                        <a th:href="@{/users/{id}/delete(id=${user.id})}" onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">Eliminar</a>
+                        <a th:href="@{/mvc/users/edit(id=${user.id})}">Editar</a>
+                        <!-- <a th:href="@{/users/{id}/delete(id=${user.id})}"
+                            onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">Eliminar</a> -->
+                        <!-- <a th:href="@{/users/{id}/delete/{id}(id=${user.id})}"
+                            onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">Eliminar</a> -->
+                        <a th:href="@{/mvc/users/delete(id=${user.id})}"
+                            onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?');">Eliminar</a> 
                     </td>
-
                 </tr>
             </tbody>
         </table>
     </div>
 </body>
+
 </html>

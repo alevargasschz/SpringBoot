@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.model.Role;
 import com.example.demo.model.User;
@@ -16,7 +17,6 @@ import com.example.demo.service.IRoleService;
 import com.example.demo.service.IUserService;
 
 import lombok.RequiredArgsConstructor;
-
 
 @Controller("mvcUserController")
 @RequestMapping("/mvc/users")
@@ -40,7 +40,28 @@ public class UserController {
         return "users/add";
     }
 
-    @PostMapping
+    @GetMapping("/delete")
+    public String deleteUser(@RequestParam Integer id) {
+        userService.deleteUser(id);
+        return "redirect:/mvc/users";
+    }
+
+    @GetMapping("/edit")
+    public String editForm(@RequestParam Integer id, Model model) {
+        User user = userService.findByIdUser(id);
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roles);
+        return "users/edit";
+    }
+
+    @PostMapping("/edit")
+    public String editUser(@ModelAttribute User user) {
+        userService.saveUser(user);
+        return "redirect:/mvc/users";
+    }
+
+    @PostMapping("/add")
     public String addUser(@ModelAttribute User user) {
         user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         userService.saveUser(user);
