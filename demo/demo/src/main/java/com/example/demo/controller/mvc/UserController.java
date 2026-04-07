@@ -57,6 +57,8 @@ public class UserController {
 
     @PostMapping("/edit")
     public String editUser(@ModelAttribute User user) {
+        User existingUser = userService.findByIdUser(user.getId());
+        user.setCreatedAt(existingUser.getCreatedAt());
         userService.saveUser(user);
         return "redirect:/mvc/users";
     }
