@@ -3,6 +3,7 @@ package com.example.demo.controller.mvc;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("hasAuthority('create-user')")
     public String addForm(Model model) {
         User user = new User();
         List<Role> roles = roleService.findAll();

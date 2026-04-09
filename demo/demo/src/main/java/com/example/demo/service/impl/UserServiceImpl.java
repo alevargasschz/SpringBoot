@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.User;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements IUserService{
     private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Page<User> findAllUsers(Integer offset, Integer pageSize) {
@@ -32,6 +34,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public User saveUser(User user) {
+        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         return userRepository.save(user);
     }
 
@@ -43,5 +46,10 @@ public class UserServiceImpl implements IUserService{
     @Override
     public User findByIdUser(Integer id) {
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 }
