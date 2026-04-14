@@ -1,0 +1,31 @@
+header {
+    background: #f8fafc;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+header h1 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: #1e293b;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    gap: 1rem;
+}
+
+header nav a {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+header nav a:hover {
+    color: #1d4ed8;
+}
