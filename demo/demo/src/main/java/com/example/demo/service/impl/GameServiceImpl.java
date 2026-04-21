@@ -22,7 +22,7 @@ public class GameServiceImpl implements IGameService {
 
     @Override
     public Game findGameById(Integer id) {
-        return gameRepository.findById(id).orElse(null);
+        return gameRepository.findById(id).orElseThrow(() -> new RuntimeException("Game not found"));
     }
 
     @Override

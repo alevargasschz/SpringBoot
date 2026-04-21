@@ -2,8 +2,11 @@ package com.example.demo.controller.api;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Game;
@@ -13,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/public/games")
 public class GameController {
     private final IGameService gameService;
 
@@ -22,4 +26,18 @@ public class GameController {
         return ResponseEntity.ok(games);
         // return ResponceEntity.status(HttpStatus.OK).body(games);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getGameById(@PathVariable Integer id) {
+        try {
+            Game game = gameService.findGameById(id);
+            if (game == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(game);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving game: " + e.getMessage());
+        }
+    }
+
 }
