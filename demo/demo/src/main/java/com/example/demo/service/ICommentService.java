@@ -8,5 +8,8 @@ import com.example.demo.model.Comment;
 
 
 public interface ICommentService {
-    List<Comment> findByCreatedAtBetween (Timestamp startDate, Timestamp endDate);
+    List<Comment> findByCreatedAtBetween(Timestamp startDate, Timestamp endDate);
+
+    List<Comment> findAll();
+    Comment findById(Integer id);
 }

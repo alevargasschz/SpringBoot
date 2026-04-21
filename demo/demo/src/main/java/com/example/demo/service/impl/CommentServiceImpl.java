@@ -21,4 +21,16 @@ public class CommentServiceImpl implements ICommentService {
         return commentRepository.findByCreatedAtBetween(startDate, endDate);
     }
 
+    @Override
+    public List<Comment> findAll() {
+        return commentRepository.findAll();
+    }
+
+    @Override
+    public Comment findById(Integer id) {
+        return commentRepository.findById(id).orElseThrow(() -> new RuntimeException("Comment not found"));
+    }
+
+    
+
 }
