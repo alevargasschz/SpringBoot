@@ -1,0 +1,19 @@
+<header th:fragment="header">
+    <h1>Gestión de Usuarios</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/users}">Lista de Usuarios</a></li>
+            <li><a th:href="@{/users/add}">Agregar Usuario</a></li>
+            <li>
+                <form
+                    th:action="@{/logout}"
+                    method="post"
+                    style="display: inline"
+                >
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+    <hr />
+</header>
