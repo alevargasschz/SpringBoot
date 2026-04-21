@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.GameResponse;
 import com.example.demo.model.Game;
 import com.example.demo.service.IGameService;
 
@@ -31,10 +32,8 @@ public class GameController {
     public ResponseEntity<?> getGameById(@PathVariable Integer id) {
         try {
             Game game = gameService.findGameById(id);
-            if (game == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(game);
+            GameResponse response = new GameResponse(game.getId(), game.getName(), game.getDescription());
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving game: " + e.getMessage());
         }

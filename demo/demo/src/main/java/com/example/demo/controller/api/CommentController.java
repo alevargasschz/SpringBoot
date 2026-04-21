@@ -29,11 +29,7 @@ public class CommentController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getCommentById(@PathVariable Integer id) {
         try {
-            Comment comment = commentService.findById(id);
-            if (comment == null) {
-                return ResponseEntity.notFound().build();
-            }
-            return ResponseEntity.ok(comment);
+            return ResponseEntity.ok(commentService.findById(id));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving comment: " + e.getMessage());
         }
