@@ -20,5 +20,13 @@ public class ParticipantServiceImpl implements IParticipantService {
         return participantRepository.findByIsWinner(isWinner);
     }
 
-    
+    @Override
+    public List<Participant> findAll() {
+        return participantRepository.findAll();
+    }
+
+    @Override
+    public Participant findById(Integer id) {
+        return participantRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Participant not found"));
+    }
 }

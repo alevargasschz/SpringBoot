@@ -12,7 +12,7 @@ import com.example.demo.service.IParticipantService;
 import lombok.RequiredArgsConstructor;
 
 // Anotamos la clase como un controlador REST para que Spring la reconozca como tal y pueda manejar las solicitudes HTTP.
-@RestController
+@RestController("participantRestController")
 
 // Configuramos la ruta base para este controlador, por ejemplo, /users,
 // lo que significa que todas las rutas definidas en este controlador comenzarán con /users.

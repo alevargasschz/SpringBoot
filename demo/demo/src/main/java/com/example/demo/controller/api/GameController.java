@@ -22,9 +22,12 @@ public class GameController {
     private final IGameService gameService;
 
     @GetMapping
-    public ResponseEntity<List<Game>> getAllGames() {
+    public ResponseEntity<List<GameResponse>> getAllGames() {
         List<Game> games = gameService.findAllGames();
-        return ResponseEntity.ok(games);
+        List<GameResponse> response = games.stream()
+                .map(game -> new GameResponse(game.getId(), game.getName(), game.getDescription()))
+                .toList();
+        return ResponseEntity.ok(response);
         // return ResponceEntity.status(HttpStatus.OK).body(games);
     }
 
