@@ -7,12 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameResponse {
-    private Integer id;
+public class GameRequest {
     private String name;
     private String description;
     private Integer minPlayers;
     private Integer maxPlayers;
     private String category;
-    private String creatorName;
+    private Integer creatorId;
 }
