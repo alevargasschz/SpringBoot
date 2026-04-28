@@ -11,7 +11,9 @@ import com.example.demo.model.RolePermission;
 import com.example.demo.model.User;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
 @AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
