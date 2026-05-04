@@ -15,4 +15,6 @@ public class GameResponse {
     private Integer maxPlayers;
     private String category;
     private String creatorName;
+    private Integer userId;
+    private String username;
 }

@@ -16,6 +16,7 @@ import com.example.demo.model.Game;
 import com.example.demo.model.User;
 import com.example.demo.service.IGameService;
 import com.example.demo.service.IUserService;
+import com.example.mappers.GameMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,21 +31,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class GameController {
     private final IGameService gameService;
     private final IUserService userService;
+    private final GameMapper gameMapper;
 
     @GetMapping
     public ResponseEntity<List<GameResponse>> getAllGames() {
         List<Game> games = gameService.findAllGames();
-        List<GameResponse> response = games.stream()
-                .map(game -> new GameResponse(
-                        game.getId(),
-                        game.getName(),
-                        game.getDescription(),
-                        game.getMinPlayers(),
-                        game.getMaxPlayers(),
-                        game.getCategory(),
-                        game.getCreatedBy().getUsername()
-                ))
-                .toList();
+        List<GameResponse> response = gameMapper.toDtoList(games);
         return ResponseEntity.ok(response);
         // return ResponceEntity.status(HttpStatus.OK).body(games);
     }
@@ -53,19 +45,12 @@ public class GameController {
     public ResponseEntity<?> getGameById(@PathVariable Integer id) {
         try {
             Game game = gameService.findGameById(id);
-            GameResponse response = new GameResponse(
-                    game.getId(),
-                    game.getName(),
-                    game.getDescription(),
-                    game.getMinPlayers(),
-                    game.getMaxPlayers(),
-                    game.getCategory(),
-                    game.getCreatedBy().getUsername());
+            GameResponse response = gameMapper.toDto(game);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error retrieving game: " + e.getMessage());
-                    
+
         }
     }
     
@@ -84,14 +69,7 @@ public class GameController {
             game.setCreatedBy(creator);
             Game savedGame = gameService.saveGame(game);
 
-            GameResponse response = new GameResponse(
-                    savedGame.getId(),
-                    savedGame.getName(),
-                    savedGame.getDescription(),
-                    savedGame.getMinPlayers(),
-                    savedGame.getMaxPlayers(),
-                    savedGame.getCategory(),
-                    savedGame.getCreatedBy().getUsername());
+            GameResponse response = gameMapper.toDto(savedGame);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
@@ -114,15 +92,7 @@ public class GameController {
             game.setCreatedBy(creator);
             Game savedGame = gameService.saveGame(game);
 
-            GameResponse response = new GameResponse(
-                    savedGame.getId(),
-                    savedGame.getName(),
-                    savedGame.getDescription(),
-                    savedGame.getMinPlayers(),
-                    savedGame.getMaxPlayers(),
-                    savedGame.getCategory(),
-                    savedGame.getCreatedBy().getUsername()
-            );
+            GameResponse response = gameMapper.toDto(savedGame);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
@@ -135,15 +105,7 @@ public class GameController {
         try {
             Game game = gameService.findGameById(id);
             gameService.deleteGame(id);
-            GameResponse response = new GameResponse(
-                    game.getId(),
-                    game.getName(),
-                    game.getDescription(),
-                    game.getMinPlayers(),
-                    game.getMaxPlayers(),
-                    game.getCategory(),
-                    game.getCreatedBy().getUsername()
-            );
+            GameResponse response = gameMapper.toDto(game);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
