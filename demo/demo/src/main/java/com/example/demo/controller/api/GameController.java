@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.GameRequest;
 import com.example.demo.dto.GameResponse;
+import com.example.demo.mappers.GameMapper;
 import com.example.demo.model.Game;
 import com.example.demo.model.User;
 import com.example.demo.service.IGameService;
 import com.example.demo.service.IUserService;
-import com.example.mappers.GameMapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

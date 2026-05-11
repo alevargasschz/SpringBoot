@@ -1,0 +1,4 @@
+$kind: http-request
+name: Get Role Permissions
+method: GET
+url: '{{baseUrl}}/role-permissions'

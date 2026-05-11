@@ -1,0 +1,4 @@
+$kind: http-request
+name: Save User
+method: GET
+url: '{{baseUrl}}/users/save'

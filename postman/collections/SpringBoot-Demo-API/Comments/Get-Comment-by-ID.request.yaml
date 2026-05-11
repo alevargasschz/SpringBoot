@@ -1,0 +1,4 @@
+$kind: http-request
+name: Get Comment by ID
+method: GET
+url: '{{baseUrl}}/public/comments/{{commentId}}'

@@ -1,0 +1,18 @@
+$kind: http-request
+name: Create Game
+method: POST
+url: '{{baseUrl}}/public/games/create'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Chess",
+      "description": "Classic strategy board game",
+      "minPlayers": 2,
+      "maxPlayers": 2,
+      "category": "Strategy",
+      "creatorId": 1
+    }

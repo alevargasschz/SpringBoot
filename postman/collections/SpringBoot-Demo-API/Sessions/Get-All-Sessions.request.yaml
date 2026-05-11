@@ -1,0 +1,4 @@
+$kind: http-request
+name: Get All Sessions
+method: GET
+url: '{{baseUrl}}/public/sessions'

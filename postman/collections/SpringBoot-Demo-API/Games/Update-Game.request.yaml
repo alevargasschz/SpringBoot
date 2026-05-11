@@ -1,0 +1,18 @@
+$kind: http-request
+name: Update Game
+method: PUT
+url: '{{baseUrl}}/public/games/update/{{gameId}}'
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Chess Updated",
+      "description": "Updated description",
+      "minPlayers": 2,
+      "maxPlayers": 4,
+      "category": "Strategy",
+      "creatorId": 1
+    }

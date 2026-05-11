@@ -1,0 +1,5 @@
+$kind: collection
+name: SpringBoot Demo API
+variables:
+  - key: baseUrl
+    value: 'http://localhost:8081/api'

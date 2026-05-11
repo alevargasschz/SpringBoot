@@ -1,0 +1,4 @@
+$kind: http-request
+name: Delete Game
+method: DELETE
+url: '{{baseUrl}}/public/games/delete/{{gameId}}'

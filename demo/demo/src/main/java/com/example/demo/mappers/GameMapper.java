@@ -1,4 +1,4 @@
-package com.example.mappers;
+package com.example.demo.mappers;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ import com.example.demo.model.Game;
 public interface GameMapper {
     @Mappings({
         //@Mapping(source = "user", target = "userId", qualifiedByName = "userId"),
-        @Mapping(source = "user", target = "userId", qualifiedByName = "userId"),
-        @Mapping(source = "user", target = "username", qualifiedByName = "userUsername")
+        @Mapping(source = "createdBy", target = "userId", qualifiedByName = "userId"),
+        @Mapping(source = "createdBy", target = "username", qualifiedByName = "userUsername")
     })
     GameResponse toDto(Game game);
     

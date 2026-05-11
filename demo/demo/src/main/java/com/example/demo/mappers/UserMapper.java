@@ -1,4 +1,4 @@
-package com.example.mappers;
+package com.example.demo.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;

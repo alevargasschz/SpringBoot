@@ -1,0 +1,4 @@
+$kind: http-request
+name: Get Game by ID
+method: GET
+url: '{{baseUrl}}/public/games/{{gameId}}'
