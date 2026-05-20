@@ -1,13 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import Landing from './Landing';
-import Profile from './Profile';
+import { RouterProvider } from 'react-router';
+import router from './router/Router';
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
-        <h1>Hello, World!</h1>
-        <p>Welcome to your React application.</p>
-        <Landing />
-        <Profile />
+        <RouterProvider router={router}></RouterProvider>
     </StrictMode>,
 );
