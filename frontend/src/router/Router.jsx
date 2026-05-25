@@ -3,6 +3,7 @@ import ProfileCard from '../components/ProfileCard';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Dashboard from '../pages/Dashboard/Dashboard';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const router = createBrowserRouter([
     {
@@ -19,7 +20,13 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <ProtectedRoute />,
+        children: [
+            {
+                element: <Dashboard />,
+                index: true,
+            },
+        ]
     },
     {
         path: '/auth',
