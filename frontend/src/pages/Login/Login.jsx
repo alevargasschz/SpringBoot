@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react';
 import { Box, Typography, TextField, Button, Paper, Stack } from '@mui/material';
+import login from '../Login/services/login.service';
+import { useNavigate } from 'react-router';
 
 export default function Login() {
     const ref = useRef();
+    const nav = useNavigate();
 
     const [user, setUser] = useState({
         username: '',
@@ -11,9 +14,12 @@ export default function Login() {
     });
 
     const onSubmit = (e) => {
-        e.preventDefault(); // Evitar que el 
+        e.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
         const formData = new FormData(ref.current);
         const data = Object.fromEntries(formData.entries());
+        const response = login(data.username, data.password);
+        localStorage.setItem('token', response.token);
+        nav('/profile');
     };
 
     return (

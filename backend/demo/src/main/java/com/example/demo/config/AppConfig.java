@@ -43,55 +43,67 @@ public class AppConfig {
 
         @Bean
         @Order(1)
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationProvider authenticationProvider)
+                        throws Exception {
+
                 return http
-                        .securityMatcher("/**", "/h2-console/**")
-                        .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
-                        .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
-                        .authorizeHttpRequests(authz -> authz
-                                        .requestMatchers("/public/**", "/h2-console/**").permitAll()
-                                        .requestMatchers("/login", "/css/**", "/js/**").permitAll()
-                                        .anyRequest().authenticated())
-                        .formLogin(form -> form
-                                        .loginPage("/login") // URL personalizada para mostrar login
-                                        .loginProcessingUrl("/login") // URL que procesa el login
-                                        .defaultSuccessUrl("/users", true) // Redirección después del login
-                                                                                // exitoso
-                                        .failureUrl("/login?error") // Redirección en caso de error
-                                        .usernameParameter("username") // Nombre del campo username
-                                        .passwordParameter("password") // Nombre del campo password
-                                        .permitAll())
-                        .logout(logout -> logout
-                                        .logoutUrl("/logout")
-                                        .logoutSuccessUrl("/login?logout")
-                                        .permitAll())
-                        .build();
+                                .securityMatcher("/mvc/**")
+                                .authorizeHttpRequests(authz -> authz
+                                                .requestMatchers("/mvc/public/**").permitAll()
+                                                .requestMatchers("/mvc/auth/login", "/css/**", "/js/**").permitAll()
+                                                .requestMatchers("/h2-console/**").permitAll()
+                                                .anyRequest().authenticated())
+                                .formLogin(form -> form
+                                                .loginPage("/mvc/auth/login") // URL personalizada para mostrar login
+                                                .loginProcessingUrl("/mvc/auth/login") // URL que procesa el login
+                                                .defaultSuccessUrl("/mvc/users", true) // Redirección después del login
+                                                                                       // exitoso
+                                                .failureUrl("/mvc/auth/login?error") // Redirección en caso de error
+                                                .usernameParameter("username") // Nombre del campo username
+                                                .passwordParameter("password") // Nombre del campo password
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout")
+                                                .logoutSuccessUrl("/mvc/auth/login?logout")
+                                                .permitAll())
+
+                                .authenticationProvider(authenticationProvider)
+
+                                .build();
         }
 
         @Bean
         @Order(2)
-        public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
-                return http
-                        .securityMatcher("/example/**")
-                        .csrf(csrf -> csrf.disable())
-                        .addFilterBefore(customSecurityFilter(), UsernamePasswordAuthenticationFilter.class)
-                        .authorizeHttpRequests(authz -> authz
-                                        .requestMatchers("/example/public/**").permitAll()
-                                        .anyRequest().authenticated())
-                        .build();
-        }
-
-        @Bean
-        @Order(3)
         public SecurityFilterChain restSecurityFilterChain(HttpSecurity http) throws Exception {
                 return http
-                        .securityMatcher("/rest/**")
-                        .csrf(csrf -> csrf.disable())
-                        .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                        .authorizeHttpRequests(authz -> authz
-                                        .requestMatchers("/rest/public/**", "/rest/auth/login").permitAll()
-                                        .anyRequest().authenticated())
-                        .sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No tener sesiones, stateful
-                        .build();
+                                .securityMatcher("/rest/**")
+                                .csrf(csrf -> csrf.disable())
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                                .authorizeHttpRequests(authz -> authz
+                                                .requestMatchers("/rest/auth/**").permitAll()
+                                                .requestMatchers("/rest/public/**").permitAll()
+                                                .requestMatchers("/h2-console/**").permitAll()
+                                                .anyRequest().authenticated())
+                                .headers(headers -> headers.frameOptions(frame -> frame.disable())) // Para acceder a H2
+                                                                                                    // Console
+                                .sessionManagement(t -> t.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No
+                                                                                                                  // tener
+                                                                                                                  // sesiones
+                                                                                                                  // stateful
+                                .build();
+        }
+
+        private CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.setAllowCredentials(true); // Permitir credenciales, esto significa que las cookies,
+                                                         // encabezados de autorización o certificados TLS pueden ser
+                                                         // incluidos en las solicitudes
+                configuration.addAllowedOriginPattern("*"); // Permitir cualquier origen
+                configuration.addAllowedHeader("*"); // Permitir cualquier encabezado
+                configuration.addAllowedMethod("*"); // Permitir cualquier método (GET, POST, PUT, DELETE, etc.)
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
         }
 }
