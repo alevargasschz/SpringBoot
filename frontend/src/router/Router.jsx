@@ -26,6 +26,10 @@ const router = createBrowserRouter([
                 element: <Dashboard />,
                 index: true,
             },
+            {
+                path: 'profile',
+                element: <ProfileCard name="Alejandro" img="https://picsum.photos/id/101/200/300" age={19} />
+            }
         ]
     },
     {

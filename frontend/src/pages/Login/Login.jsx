@@ -1,66 +1,63 @@
-import { useRef, useState } from 'react';
-import { Box, Typography, TextField, Button, Paper, Stack } from '@mui/material';
-import login from '../Login/services/login.service';
-import { useNavigate } from 'react-router';
+import {
+    Box,
+    Button,
+    Container,
+    Paper,
+    Stack,
+    TextField,
+    Typography,
+} from '@mui/material';
+import { useContext, useRef } from 'react';
+import { login } from './services/login.service';
+import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 
-export default function Login() {
+function SignIn() {
     const ref = useRef();
     const nav = useNavigate();
+    const { login: setAuthToken } = useContext(AuthContext);
 
-    const [user, setUser] = useState({
-        username: '',
-        password: '',
-        error: null,
-    });
-
-    const onSubmit = (e) => {
-        e.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+    const onSubmit = async (e) => {
+        e.preventDefault(); // Evitar que el formulario se envíe y recargue la página
         const formData = new FormData(ref.current);
-        const data = Object.fromEntries(formData.entries());
-        const response = login(data.username, data.password);
-        localStorage.setItem('token', response.token);
-        nav('/profile');
+        console.log(ref.current);
+        const data = Object.fromEntries(formData);
+        console.log(data);
+        const response = await login(data.username, data.password);
+        setAuthToken(response.accessToken);
+        nav('/games', { replace: true });
     };
 
     return (
         <Box
-            display="grid"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="80vh"
-            p={2}
-            placeItems="center"
+            sx={{ minHeight: '100vh', display: 'grid', placeItems: 'center', px: 2 }}
         >
-            <Paper elevation={3} sx={{ p: 4, width: 360 }}>
-                <Typography variant="h5" mb={2} align="center">
-                    Iniciar sesión
-                </Typography>
-                <Stack component="form" ref={ref} onSubmit={onSubmit} spacing={3}>
-                    <TextField
-                        label="Username"
-                        fullWidth
-                        margin="normal"
-                        value={user.username}
-                        onChange={(e) => setUser({ ...user, username: e.target.value })}
-                    />
-                    <TextField
-                        label="Contraseña"
-                        type="password"
-                        fullWidth
-                        margin="normal"
-                        value={user.password}
-                        onChange={(e) => setUser({ ...user, password: e.target.value })}
-                    />
-                    {user.error && (
-                        <Typography color="error" variant="body2" mt={1}>
-                            {user.error}
-                        </Typography>
-                    )}
-                    <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
-                        Entrar
-                    </Button>
-                </Stack>
-            </Paper>
+            <Container maxWidth="sm">
+                <Paper elevation={3} sx={{ p: { xs: 3, md: 4 } }}>
+                    <Stack spacing={3} component="form" ref={ref}>
+                        <Box>
+                            <Typography variant="h4" component="h1" fontWeight={700}>
+                                Login
+                            </Typography>
+                        </Box>
+
+                        <TextField label="Username" name="username" fullWidth />
+
+                        <TextField
+                            label="Password"
+                            name="password"
+                            type="password"
+                            fullWidth
+                        />
+
+                        <Button type="submit" variant="contained" onClick={onSubmit}>
+                            Entrar
+                        </Button>
+                    </Stack>
+                </Paper>
+            </Container>
         </Box>
     );
 }
+
+export default SignIn;
