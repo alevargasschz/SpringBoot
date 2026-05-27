@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useContext, useRef } from 'react';
 import { login } from './services/login.service';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import AuthContext from '../../context/AuthContext';
 
 function SignIn() {
